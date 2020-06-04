@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "880716337276",
+    "firebase_url": "https://sangeet-f5980.firebaseio.com",
+    "project_id": "sangeet-f5980",
+    "storage_bucket": "sangeet-f5980.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880716337276:android:3499d8a8cd600349e239f9",
+        "android_client_info": {
+          "package_name": "com.example.sangeet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880716337276-3fo853a11qeqigehi5kqoklqmqefrmrn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj2E0EiPXREKJK6q5GLmmE8v6ju2xZeV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880716337276-3fo853a11qeqigehi5kqoklqmqefrmrn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
