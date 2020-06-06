@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.view.Menu;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent_upload = new Intent();
         intent_upload.setType("audio/*");
         intent_upload.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent_upload, requestCode: 1);
+        startActivityForResult(intent_upload, 1);
     }
 
     @Override
@@ -60,18 +61,19 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode==RESULT_OK){
                 uri = data.getData();
                 Cursor mcursor = getApplicationContext().getContentResolver()
-                        .query(uri, null, null, null);
-                int indexname = mcursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                        .query(uri, null, null, null, null);
+                int indexedname = mcursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
                 mcursor.moveToFirst();
-                mcursor.getString(indexname);
+                songName = mcursor.getString(indexedname);
                 mcursor.close();
+
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     private boolean validatePermission(){
-        Dexter.withActivity(MainActivity.this)
+        Dexter.withContext(this)
                 .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(new PermissionListener() {
                     @Override
