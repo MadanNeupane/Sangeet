@@ -12,5 +12,15 @@
         android:id="@+id/myListView"
         android:choiceMode="singleChoice"
         android:listSelector="@android:color/holo_blue_dark"
-/>
+        android:padding="10dp"
+        />
+
+    <com.example.jean.jcplayer.view.JcPlayerView
+        android:id="@+id/jcplayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        />
+
 </RelativeLayout>

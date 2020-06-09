@@ -13,10 +13,16 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jean.jcplayer.model.JcAudio;
+import com.example.jean.jcplayer.view.JcPlayerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -50,13 +56,26 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> arrayListSongUrl = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
 
+    JcPlayerView jcPlayerView;
+    ArrayList<JcAudio> jcAudios = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listView = findViewById(R.id.myListView);
+        jcPlayerView = findViewById(R.id.jcplayer);
 
         retrieveSongs();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                jcPlayerView.playAudio(jcAudios.get(position));
+                jcPlayerView.setVisibility(View.VISIBLE);
+                jcPlayerView.createNotification();
+            }
+        });
     }
 
     private void retrieveSongs() {
@@ -70,9 +89,25 @@ public class MainActivity extends AppCompatActivity {
                     Song songObj = ds.getValue(Song.class);
                     arrayListSongName.add(songObj.getSongName());
                     arrayListSongUrl.add(songObj.getSongUrl());
+                    jcAudios.add(JcAudio.createFromURL(songObj.getSongName(), songObj.getSongUrl()));
+
                 }
 
-                arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, arrayListSongName);
+                arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, arrayListSongName){
+
+                    @NonNull
+                    @Override
+                    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+                        View view = super.getView(position, convertView, parent);
+                        TextView textView = (TextView)view.findViewById(android.R.id.text1);
+                        textView.setSingleLine(true);
+                        textView.setMaxLines(1);
+
+                        return view;
+                    }
+                };
+                jcPlayerView.initPlaylist(jcAudios, null);
                 listView.setAdapter(arrayAdapter);
 
             }
@@ -159,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
             public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                 double progress = (100.0*taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
                 int currentProgress = (int)progress;
-                progressDialog.setMessage("Uploaded "+currentProgress+"%");
+                progressDialog.setMessage("Uploading...  "+currentProgress+"%");
             }
         });
     }
