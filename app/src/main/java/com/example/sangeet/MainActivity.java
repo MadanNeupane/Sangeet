@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 jcPlayerView.playAudio(jcAudios.get(position));
                 jcPlayerView.setVisibility(View.VISIBLE);
-                jcPlayerView.createNotification();
+                jcPlayerView.createNotification(R.drawable.logo);
             }
         });
     }
@@ -107,9 +107,10 @@ public class MainActivity extends AppCompatActivity {
                         return view;
                     }
                 };
-                jcPlayerView.initPlaylist(jcAudios, null);
-                listView.setAdapter(arrayAdapter);
-
+                if(jcAudios.size()>0) {
+                    jcPlayerView.initPlaylist(jcAudios, null);
+                    listView.setAdapter(arrayAdapter);
+                }
             }
 
             @Override
