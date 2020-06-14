@@ -22,14 +22,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText login_email, login_pass;
     private FirebaseAuth mAuth;
-    private FirebaseUser user;
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        updateUI(user);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
     }
+
 
     public void login(View view) {
         String l_email = login_email.getText().toString().trim();
@@ -67,12 +60,11 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            Toast.makeText(LoginActivity.this, "Login Success.",Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this,Logout.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
 
                         // ...
@@ -84,12 +76,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
     }
 
-    private void updateUI(FirebaseUser user) {
-        user = mAuth.getCurrentUser();
-        /*-------- Check if user is already logged in or not--------*/
-        if (user != null) {
-            Toast.makeText(LoginActivity.this, "Login Success.",Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginActivity.this,Logout.class));
-        }
-    }
 }
