@@ -16,10 +16,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText signup_email, signup_pass, signup_cpass;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        updateUI(user);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,5 +87,17 @@ public class RegisterActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    public void Login(View view) {
+        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+    }
+
+    private void updateUI(FirebaseUser user) {
+        user = mAuth.getCurrentUser();
+        /*-------- Check if user is already logged in or not--------*/
+        if (user != null) {
+            startActivity(new Intent(RegisterActivity.this,Logout.class));
+        }
     }
 }
