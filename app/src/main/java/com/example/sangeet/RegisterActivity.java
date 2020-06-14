@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         /*-------- Check if user is already logged in or not--------*/
         if (user != null) {
-            startActivity(new Intent(RegisterActivity.this,Logout.class));
+            startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
         }
     }
 }

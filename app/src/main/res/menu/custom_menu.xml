@@ -3,9 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/nav_upload"
-        android:title="upload"
+        android:title="Upload"
         app:showAsAction="always"
         android:icon="@drawable/ic_upload"
+        />
+
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_logout"
         />
 
 </menu>

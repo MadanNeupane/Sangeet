@@ -84,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot ds:dataSnapshot.getChildren()){
+                for (DataSnapshot ds :dataSnapshot.getChildren()){
 
-                    Song songObj = ds.getValue(Song.class);
+                    Song songObj = ds.getValue(Song.class); //tf is this error now?
                     arrayListSongName.add(songObj.getSongName());
                     arrayListSongUrl.add(songObj.getSongUrl());
                     jcAudios.add(JcAudio.createFromURL(songObj.getSongName(), songObj.getSongUrl()));
@@ -128,10 +128,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.nav_upload){
-            if (validatePermission()) {
-                pickSong();
-            }
+      switch (item.getItemId()){
+          case R.id.nav_upload:
+              if(item.getItemId()==R.id.nav_upload){
+                  if (validatePermission()) {
+                      pickSong();
+                  }
+              }
+              break;
+          case R.id.logout:
+              Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
+              finishAffinity();
+              startActivity(new Intent(this, LoginActivity.class));
+              break;
         }
         return super.onOptionsItemSelected(item);
     }
