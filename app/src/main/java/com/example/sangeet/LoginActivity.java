@@ -22,6 +22,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText login_email, login_pass;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        updateUI(user);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(l_email)){
             Toast.makeText(this, "Email Field is Empty", Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(l_pass)){
+        else if(TextUtils.isEmpty(l_pass)){
             Toast.makeText(this, "Password Field is Empty", Toast.LENGTH_SHORT).show();
         }else {
             loginUser(l_email,l_pass);
@@ -60,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success
-                            Toast.makeText(LoginActivity.this, "Login Success.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Logged in Successfully.",Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this,MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
@@ -70,6 +78,18 @@ public class LoginActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    public void register(View view) {
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+    }
+
+    private void updateUI(FirebaseUser user) {
+        user = mAuth.getCurrentUser();
+        /*-------- Check if user is already logged in or not--------*/
+        if (user != null) {
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        }
     }
 
 }

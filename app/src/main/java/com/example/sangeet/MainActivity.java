@@ -143,11 +143,11 @@ public class MainActivity extends AppCompatActivity {
               }
               break;
           case R.id.logout:
-              Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
+              Toast.makeText(getApplicationContext(), "Logged Out", Toast.LENGTH_SHORT).show();
               user = mAuth.getCurrentUser();
               mAuth.signOut();
               finishAffinity();
-              startActivity(new Intent(this, RegisterActivity.class));
+              startActivity(new Intent(this, LoginActivity.class));
               break;
         }
         return super.onOptionsItemSelected(item);

@@ -24,13 +24,6 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseUser user;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        updateUI(user);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
@@ -77,6 +70,8 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success
+                            user = mAuth.getCurrentUser();
+                            mAuth.signOut();
                             Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         } else {
@@ -94,13 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
     }
 
-    private void updateUI(FirebaseUser user) {
-        user = mAuth.getCurrentUser();
-        /*-------- Check if user is already logged in or not--------*/
-        if (user != null) {
-            startActivity(new Intent(RegisterActivity.this,MainActivity.class));
-        }
-    }
 }
 
 
