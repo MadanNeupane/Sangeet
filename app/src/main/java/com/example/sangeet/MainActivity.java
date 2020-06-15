@@ -27,6 +27,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     Uri uri;
     String songName, songUrl;
     ListView listView;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     ArrayList<String> arrayListSongName = new ArrayList<>();
     ArrayList<String> arrayListSongUrl = new ArrayList<>();
@@ -76,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 jcPlayerView.createNotification(R.drawable.logo);
             }
         });
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     private void retrieveSongs() {
@@ -138,8 +144,10 @@ public class MainActivity extends AppCompatActivity {
               break;
           case R.id.logout:
               Toast.makeText(getApplicationContext(), "Logging Out...", Toast.LENGTH_SHORT).show();
+              user = mAuth.getCurrentUser();
+              mAuth.signOut();
               finishAffinity();
-              startActivity(new Intent(this, LoginActivity.class));
+              startActivity(new Intent(this, RegisterActivity.class));
               break;
         }
         return super.onOptionsItemSelected(item);

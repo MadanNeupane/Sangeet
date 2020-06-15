@@ -54,16 +54,16 @@ public class RegisterActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(email)){
             Toast.makeText(this, "Email Field is Empty", Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(pass)){
+        else if(TextUtils.isEmpty(pass)){
             Toast.makeText(this, "Password Field is Empty", Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(c_pass)){
+        else if(TextUtils.isEmpty(c_pass)){
             Toast.makeText(this, "Confirm Password Field is Empty", Toast.LENGTH_SHORT).show();
         }
-        if(pass.length() < 8){
+        else if(pass.length() < 8){
             Toast.makeText(this, "Password Must Be Of More Than 8 Character", Toast.LENGTH_SHORT).show();
         }
-        if(pass.equals(c_pass)){
+        else if(pass.equals(c_pass)){
             createAccount(email, pass);
         }else{
             Toast.makeText(this, "Password Does not Match", Toast.LENGTH_SHORT).show();
@@ -87,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+
     }
 
     public void Login(View view) {
@@ -97,7 +98,9 @@ public class RegisterActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         /*-------- Check if user is already logged in or not--------*/
         if (user != null) {
-            startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+            startActivity(new Intent(RegisterActivity.this,MainActivity.class));
         }
     }
 }
+
+
