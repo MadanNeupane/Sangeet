@@ -4,7 +4,7 @@
 
 This is a college project for *Current Technologies: Mobile and Cloud Computing*. In this application, the users can upload their music (audio) files to listen them for later.
 
-![](screenshot.png)
+![](screenshot.jpg)
 
 ## System Requirements and Recommendations
 - Android Studio with SDK Tools 26.1.1 or higher
